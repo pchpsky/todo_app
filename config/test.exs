@@ -3,7 +3,7 @@ use Mix.Config
 # Configure your database
 config :todo_app, TodoApp.Repo,
   username: "postgres",
-  password: "postgres",
+  password: "admin",
   database: "todo_app_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox

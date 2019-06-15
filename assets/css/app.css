@@ -1,3 +1,35 @@
 /* This file is for your main application css. */
 
 @import "./materialize.min.css";
+
+.collection {
+  border: 0;
+}
+
+#app {
+  margin-top: 40px;
+}
+
+.btn-delete {
+  display: none;
+}
+
+.todo-item:hover .btn-delete {
+  display: block;
+}
+
+.filter {
+  display: inline-block !important;
+}
+
+.filter a {
+  display: inline !important;
+}
+
+.todo-input {
+  margin: 0 auto;
+}
+
+.bold {
+  font-weight: bold;
+}

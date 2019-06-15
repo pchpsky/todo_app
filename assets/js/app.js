@@ -15,15 +15,10 @@ import "phoenix_html"
 //
 // Local files can be imported directly using relative paths, for example:
 // import socket from "./socket"
-import "materialize.min"
+import "./materialize.min"
 
 import React from "react";
 import ReactDOM from "react-dom";
+import Main from "./components/Main";
 
-class App extends React.Component {
-  render() {
-    return (<h1>Hello React!</h1>)
-  }
-}
-
-ReactDOM.render(<App/>, document.getElementById("app"));
+ReactDOM.render(React.createElement(Main), document.getElementById("app"));

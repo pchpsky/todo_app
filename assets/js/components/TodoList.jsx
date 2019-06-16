@@ -2,6 +2,7 @@ import React from "react";
 import List from "./List";
 import Input from "./Input";
 import Filter from "./Filter";
+import TodoApi from "../api/todo_api";
 
 const id = (item) => item;
 
@@ -16,41 +17,6 @@ const mapObject = (obj) => (callback) => {
     newObj[key] = callback(value);
     return newObj;
   }, {});
-};
-
-const responseJson = (response) => response.json();
-
-const fetchTodos = () => {
-  return fetch("/api/todos").then(responseJson);
-};
-
-const postTodo = (todo) => {
-  return fetch("/api/todos", {
-    method: "POST",
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({todo})
-  }).then(responseJson);
-};
-
-const updateTodo = (id, params) => {
-  return fetch(`/api/todos/${id}`, {
-    method: "PATCH",
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({todo: params})
-  }).then(responseJson);
-};
-
-const deleteTodo = (id) => {
-  return fetch(`/api/todos/${id}`, {
-    method: "DELETE",
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
 };
 
 class TodoList extends React.Component {
@@ -68,13 +34,13 @@ class TodoList extends React.Component {
       visibility: "all"
     };
 
-    fetchTodos().then((json) => this.setState({...this.state, todoItems: json.data}));
+    TodoApi.read().then((json) => this.setState({...this.state, todoItems: json.data}));
   }
 
   toggleItem = (id) => {
     const todo = findBy(this.state.todoItems)(item => item.id === id);
 
-    updateTodo(id, {completed: !todo.completed})
+    TodoApi.update(id, {completed: !todo.completed})
       .then(({data}) => {
         const newTodoItems = this.state.todoItems.map((item) => item.id === id ? data : item);
         this.setState({...this.state, todoItems: newTodoItems})
@@ -82,14 +48,14 @@ class TodoList extends React.Component {
   };
 
   addItem = (description) => {
-    postTodo({description})
+    TodoApi.post({description})
       .then((json) => {
         this.setState({todoItems: [...this.state.todoItems, json.data]})
       });
   };
 
   deleteTodo = (id) => {
-    deleteTodo(id).then(() => {
+    TodoApi.remove(id).then(() => {
       this.setState({
         ...this.state,
         todoItems: this.state.todoItems.filter((item) => id !== item.id)

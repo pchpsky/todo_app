@@ -3,14 +3,12 @@ import Item from "./Item";
 
 class List extends React.Component {
   render() {
-    const items = this.props.todoItems.map(
-      (item, i) =>
-        <Item
-          key={i}
-          item={item}
-          onToggle={() => this.props.onTodoToggle(item.id)}
-          onDelete={() => this.props.onTodoDelete(item.id)}
-        />
+    const items = this.props.todoItems.map((item, i) =>
+      <Item
+        key={i} item={item}
+        onToggle={() => this.props.onTodoToggle(item.id)}
+        onDelete={() => this.props.onTodoDelete(item.id)}
+      />
     );
 
     return (
